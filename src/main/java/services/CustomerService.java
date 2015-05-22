@@ -56,8 +56,7 @@ public class CustomerService implements CustomerServiceInterface {
 
     @Override
     public boolean wasProductBought(Product p) {
-        // TODO Auto-generated method stub
-        return true;
+        return customers.stream().filter(c -> c.getBoughtProducts().stream().filter(pr -> pr.equals(p)).count() > 0).collect(Collectors.toList()).size() > 0;
     }
 
     @Override
@@ -67,14 +66,12 @@ public class CustomerService implements CustomerServiceInterface {
     }
 
     @Override
-    public int countBuys(Product p) {
-        // TODO Auto-generated method stub
-        return 0;
+    public int countBuys(Product product) {
+        return customers.stream().mapToInt( c -> c.getBoughtProducts().stream().filter( p -> p.equals(product) ).collect(Collectors.toList()).size() ).sum();
     }
 
     @Override
-    public int countCustomersWhoBought(Product p) {
-        // TODO Auto-generated method stub
-        return 0;
+    public int countCustomersWhoBought(Product product) {
+        return customers.stream().filter(c -> c.getBoughtProducts().contains(product) ).collect(Collectors.toList()).size();
     }
 }

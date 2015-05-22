@@ -1,3 +1,4 @@
+
 import entities.Customer;
 import entities.Product;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import services.CustomerServiceInterface;
  * @author Daniel
  */
 public class CustomerTests {
-    
+
     public CustomerTests() {
         cust1.addProduct(pr1);
         cust1.addProduct(pr1);
@@ -55,83 +56,80 @@ public class CustomerTests {
         assertNotNull("Result can't be nullddd", res);
         assertEquals(1, res.size());
     }
-    
+
     @Test
-    public void testFindByField(){
-        
-    }
-    
-    @Test
-    public void testCustomersWhoBoughtMoreThan(){
+    public void testCustomersWhoBoughtMoreThan() {
         CustomerServiceInterface cs = new CustomerService(customers);
 
         List<Customer> res = cs.customersWhoBoughtMoreThan(3);
         assertEquals(2, res.size());
     }
-    
+
     @Test
-    public void testCustomersWhoSpentMoreThan(){
+    public void testCustomersWhoSpentMoreThan() {
         CustomerServiceInterface cs = new CustomerService(customers);
 
         List<Customer> res = cs.customersWhoSpentMoreThan(125);
         assertEquals(2, res.size());
     }
-    
+
     @Test
-    public void testCustomersWithNoOrders(){
+    public void testCustomersWithNoOrders() {
         CustomerServiceInterface cs = new CustomerService(customers);
 
         List<Customer> res = cs.customersWithNoOrders();
         assertEquals(1, res.size());
     }
-    
+
     @Test
-    public void testAddProductToAllCustomers(){
+    public void testAddProductToAllCustomers() {
         int count = 0;
         CustomerServiceInterface cs = new CustomerService(customers);
-        
+
         cs.addProductToAllCustomers(pr5);
-        
-        for(Customer c : customers){
-            if(c.getBoughtProducts().get(c.getBoughtProducts().size() - 1).getId() == pr5.getId())
+
+        for (Customer c : customers) {
+            if (c.getBoughtProducts().get(c.getBoughtProducts().size() - 1).getId() == pr5.getId()) {
                 count++;
+            }
         }
-        
+
         assertEquals(count, customers.size());
     }
-    
+
     @Test
-    public void testAvgOrders(){
+    public void testAvgOrders() {
         CustomerServiceInterface cs = new CustomerService(customers);
-        
+
         double avr = 0;
-        for(Customer e : customers){
-            for(Product p : e.getBoughtProducts()){
+        for (Customer e : customers) {
+            for (Product p : e.getBoughtProducts()) {
                 avr += p.getPrice();
             }
         }
-        
-        avr = avr/customers.size();
-        assert(avr == cs.avgOrders(true));
+
+        avr = avr / customers.size();
+        assert (avr == cs.avgOrders(true));
     }
-    
+
     @Test
-    public void testWasProductBought(){
-        
+    public void testWasProductBought() {
+        CustomerServiceInterface cs = new CustomerService(customers);
+        Product product = new Product(5, "Piąty", 5);
+        assertEquals(true, cs.wasProductBought(product));
     }
-    
+
     @Test
-    public void testMostPopularProduct(){
-        
+    public void testCountBuys() {
+        CustomerServiceInterface cs = new CustomerService(customers);
+        Product product = new Product(5, "Piąty", 5);
+        assertEquals(1, cs.countBuys(product));
     }
-    
+
     @Test
-    public void testCountBuys(){
-        
-    }
-    
-    @Test
-    public void testCountCustomersWhoBought(){
-        
+    public void testCountCustomersWhoBought() {
+        CustomerServiceInterface cs = new CustomerService(customers);
+        Product product = new Product(5, "Piąty", 5);
+        assertEquals(1, cs.countCustomersWhoBought(product));
     }
 }
